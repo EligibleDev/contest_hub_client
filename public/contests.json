@@ -1,0 +1,57 @@
+[
+    {
+        "_id": "1",
+        "name": "Creative Art Challenge",
+        "image": "/demo-image.jpg",
+        "attemptedCount": 120,
+        "description": "Unleash your artistic talents in this creative art challenge. Show us your unique vision and win exciting prizes!",
+        "price": 25.99,
+        "prizeMoney": 500,
+        "taskSubmissionText": "Submit your artwork in a high-resolution format. Include a brief description of your inspiration and creative process.",
+        "category": "Art"
+    },
+    {
+        "_id": "2",
+        "name": "Coding Hackathon",
+        "image": "/demo-image.jpg",
+        "attemptedCount": 300,
+        "description": "Join our coding hackathon and showcase your coding skills. Solve real-world problems and compete for the top prize!",
+        "price": 10.99,
+        "prizeMoney": 1000,
+        "taskSubmissionText": "Submit your code on GitHub and provide a link to a live demo. Include documentation for your solution.",
+        "category": "Technology"
+    },
+    {
+        "_id": "3",
+        "name": "Photography Contest",
+        "image": "/demo-image.jpg",
+        "attemptedCount": 150,
+        "description": "Capture the beauty of the world around you in our photography contest. Share your stunning photos and win recognition.",
+        "price": 5.99,
+        "prizeMoney": 300,
+        "taskSubmissionText": "Submit your photos in a digital format. Include details about the camera settings and location of each shot.",
+        "category": "Photography"
+    },
+    {
+        "_id": "4",
+        "name": "Writing Challenge",
+        "image": "/demo-image.jpg",
+        "attemptedCount": 200,
+        "description": "Express your thoughts and creativity in our writing challenge. Share your unique stories and perspectives.",
+        "price": 7.99,
+        "prizeMoney": 200,
+        "taskSubmissionText": "Submit your written piece in a readable format. Ensure it adheres to the specified word count and theme.",
+        "category": "Writing"
+    },
+    {
+        "_id": "5",
+        "name": "Cooking Showdown",
+        "image": "/demo-image.jpg",
+        "attemptedCount": 80,
+        "description": "Show off your culinary skills in our cooking showdown. Prepare delicious dishes and impress our judges!",
+        "price": 15.99,
+        "prizeMoney": 600,
+        "taskSubmissionText": "Submit a video of your cooking process and the final dish. Include the recipe and any special techniques you used.",
+        "category": "Cooking"
+    }
+]

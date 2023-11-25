@@ -6,6 +6,13 @@
     margin: 0px;
 }
 
+.title-divider {
+    height: 6px;
+    width: 150px;
+    background-color: #e74c3c;
+    margin: auto;
+}
+
 .logo {
     width: 200px;
     margin: auto;
@@ -34,4 +41,23 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.banner .fake-input {
+    background-color: white;
+    color: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    padding: 9px;
+    padding-right: 75px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+@media screen and (max-width: 600px) {
+    .banner .fake-input {
+        padding-right: 40px;
+    }
 }
