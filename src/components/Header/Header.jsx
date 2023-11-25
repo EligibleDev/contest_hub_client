@@ -1,18 +1,22 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
-import { Divider, ListItemIcon } from "@mui/material";
-import { Logout, PersonAdd, Settings } from "@mui/icons-material";
+import {
+    Divider,
+    ListItemIcon,
+    Tooltip,
+    AppBar,
+    Box,
+    Toolbar,
+    IconButton,
+    Typography,
+    Menu,
+    Container,
+    Avatar,
+    MenuItem,
+    Button,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Logout } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const Header = () => {
     const pages = ["Products", "Pricing", "Blog"];
@@ -37,8 +41,8 @@ const Header = () => {
 
     return (
         <>
-            <AppBar position="static">
-                <Container maxWidth="xl">
+            <AppBar position="sticky">
+                <Container sx={{ mx: "auto" }} maxWidth="lg">
                     <Toolbar disableGutters>
                         <Box sx={{ display: { xs: "flex", md: "none" } }}>
                             <IconButton
@@ -84,7 +88,12 @@ const Header = () => {
                                 <Button
                                     key={page}
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: "white", display: "block" }}
+                                    sx={{
+                                        my: 2,
+                                        color: "white",
+                                        display: "block",
+                                        fontFamily: "poppins",
+                                    }}
                                 >
                                     {page}
                                 </Button>
@@ -92,14 +101,22 @@ const Header = () => {
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
+                            {/* <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar
-                                        alt="Remy Sharp"
-                                        src="/demo-image.jpg"
-                                    />
+                                    <Avatar alt="Baten Ali" src="/demo-image.jpg" />
                                 </IconButton>
-                            </Tooltip>
+                            </Tooltip> */}
+
+                            <Link to="/login">
+                                <Button
+                                    sx={{ fontWeight: "700", fontFamily: "poppins" }}
+                                    variant="outlined"
+                                    color="secondary"
+                                >
+                                    login
+                                </Button>
+                            </Link>
+
                             <Menu
                                 anchorEl={anchorElUser}
                                 id="account-menu"

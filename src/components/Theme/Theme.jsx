@@ -1,5 +1,4 @@
-import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
 
 const Theme = ({ children }) => {
@@ -7,6 +6,9 @@ const Theme = ({ children }) => {
         palette: {
             primary: {
                 main: "#e74c3c",
+            },
+            secondary: {
+                main: "#fff",
             },
         },
     });

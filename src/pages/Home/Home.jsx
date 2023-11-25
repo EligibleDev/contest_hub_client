@@ -1,11 +1,11 @@
-import { Container } from "@mui/material";
+import Banner from "./sections/Banner/Banner";
 
 const Home = () => {
-      return (
-            <Container >
-                  home page
-            </Container>
-      );
+    return (
+        <>
+            <Banner />
+        </>
+    );
 };
 
 export default Home;
