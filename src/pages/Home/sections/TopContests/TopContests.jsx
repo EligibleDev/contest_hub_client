@@ -9,7 +9,7 @@ const TopContests = () => {
     const { server } = useMain();
 
     useEffect(() => {
-        fetch(`${server}/contests`)
+        fetch(`${server}/top_contests`)
             .then((res) => res.json())
             .then((data) => setTopContests(data));
     }, []);

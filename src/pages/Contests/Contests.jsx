@@ -14,7 +14,7 @@ const Contests = () => {
     const [contests, setContests] = useState([]);
     const [currentCategory, setCurrentCategory] = useState("");
     const { server, categories } = useMain();
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -36,7 +36,8 @@ const Contests = () => {
                 <Title text="All Contests" />
 
                 <Grid
-                    sx={{ pb: "5px",
+                    sx={{
+                        pb: "5px",
                         overflowX: "auto",
                         display: "flex",
                         flexDirection: "column",
@@ -58,51 +59,55 @@ const Contests = () => {
                             <Tab key={item?.value} label={item?.label} />
                         ))}
                     </Tabs>
-                    <Grid spacing={3} container>
-                        {contests?.map((contest) => (
-                            <Grid item xs={12} sm={6} lg={3} key={contest?._id}>
-                                <Card sx={{ textAlign: "left" }}>
-                                    <CardMedia
-                                        component="img"
-                                        height="140"
-                                        image={contest?.image}
-                                        alt={contest?.name}
-                                    />
-                                    <CardContent>
-                                        <Typography
-                                            gutterBottom
-                                            variant="h5"
-                                            component="div"
-                                        >
-                                            {contest?.name}
-                                        </Typography>
+                    {contests?.length ? (
+                        <Grid spacing={3} container>
+                            {contests?.map((contest) => (
+                                <Grid item xs={12} sm={6} lg={3} key={contest?._id}>
+                                    <Card sx={{ textAlign: "left" }}>
+                                        <CardMedia
+                                            component="img"
+                                            height="140"
+                                            image={contest?.image}
+                                            alt={contest?.name}
+                                        />
+                                        <CardContent>
+                                            <Typography
+                                                gutterBottom
+                                                variant="h5"
+                                                component="div"
+                                            >
+                                                {contest?.name}
+                                            </Typography>
 
-                                        <Typography
-                                            gutterBottom
-                                            variant="body2"
-                                            color="text.secondary"
-                                        >
-                                            {typeof contest.description === "string"
-                                                ? contest.description.slice(0, 100)
-                                                : contest.description}
-                                            ...
-                                        </Typography>
+                                            <Typography
+                                                gutterBottom
+                                                variant="body2"
+                                                color="text.secondary"
+                                            >
+                                                {typeof contest.description === "string"
+                                                    ? contest.description.slice(0, 100)
+                                                    : contest.description}
+                                                ...
+                                            </Typography>
 
-                                        <Typography>
-                                            {contest?.attemptedCount} People Joined
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Link to={`/contest/${contest?._id}`}>
-                                            <Button size="small" color="primary">
-                                                details
-                                            </Button>
-                                        </Link>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
+                                            <Typography>
+                                                {contest?.attemptedCount} People Joined
+                                            </Typography>
+                                        </CardContent>
+                                        <CardActions>
+                                            <Link to={`/contest/${contest?._id}`}>
+                                                <Button size="small" color="primary">
+                                                    details
+                                                </Button>
+                                            </Link>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    ) : (
+                        <p>no data</p>
+                    )}
                 </Grid>
             </Container>
         </>

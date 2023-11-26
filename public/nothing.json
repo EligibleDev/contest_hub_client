@@ -1,0 +1,21 @@
+{
+    "name": "Business Contest",
+    "image": "/demo-image.jpg",
+    "attemptedCount": "80",
+    "description": "Participate in our business contest. Showcase your entrepreneurial skills and innovative business ideas.",
+    "price": "15.99",
+    "prizeMoney": "600",
+    "taskSubmissionText": "Submit a detailed business plan. Include financial projections and a presentation of your business concept.",
+    "category": "business",
+    "creatorInfo": {
+        "email": "creator5@example.com",
+        "displayName": "Baten Ali",
+        "photoURL": "/demo-image.jpg"
+    },
+    "winnerInfo": {
+        "email": "asdf@asdf.com",
+        "displayName": "ton moy",
+        "photoURL": "/demo-image.jpg"
+    },
+    "deadline": "2023-12-05"
+}
