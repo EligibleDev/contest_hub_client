@@ -3,15 +3,23 @@ import Title from "../../../../components/Title/Title";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useMain from "../../../../hooks/useMain/useMain";
+import { getTopContests } from "../../../../api/contests";
 
 const TopContests = () => {
     const [topContests, setTopContests] = useState([]);
     const { server } = useMain();
 
     useEffect(() => {
-        fetch(`${server}/top_contests`)
-            .then((res) => res.json())
-            .then((data) => setTopContests(data));
+        const fetchTopContests = async () => {
+            try {
+                const contestsData = await getTopContests();
+                setTopContests(contestsData);
+            } catch (error) {
+                console.error("Error fetching top contests:", error);
+            }
+        };
+
+        fetchTopContests();
     }, []);
 
     return (

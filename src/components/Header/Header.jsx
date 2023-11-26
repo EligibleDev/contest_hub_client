@@ -17,10 +17,13 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { Logout } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import useMain from "../../hooks/useMain/useMain";
+import toast from "react-hot-toast";
 
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const { user, logOut } = useMain();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -121,21 +124,26 @@ const Header = () => {
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            {/* <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Baten Ali" src="/demo-image.jpg" />
-                                </IconButton>
-                            </Tooltip> */}
-
-                            <Link to="/login">
-                                <Button
-                                    sx={{ fontWeight: "700", fontFamily: "poppins" }}
-                                    variant="outlined"
-                                    color="secondary"
-                                >
-                                    login
-                                </Button>
-                            </Link>
+                            {user ? (
+                                <Tooltip title="Open settings">
+                                    <IconButton
+                                        onClick={handleOpenUserMenu}
+                                        sx={{ p: 0 }}
+                                    >
+                                        <Avatar alt={user?.displayName} src={user?.photoURL} />
+                                    </IconButton>
+                                </Tooltip>
+                            ) : (
+                                <Link to="/login">
+                                    <Button
+                                        sx={{ fontWeight: "700", fontFamily: "poppins" }}
+                                        variant="outlined"
+                                        color="secondary"
+                                    >
+                                        login
+                                    </Button>
+                                </Link>
+                            )}
 
                             <Menu
                                 anchorEl={anchorElUser}
@@ -183,16 +191,22 @@ const Header = () => {
                                     <img
                                         width="34px"
                                         className="header-profile"
-                                        src="/demo-image.jpg"
+                                        src={user?.photoURL}
                                         alt=""
                                     />
-                                    Baten Ali
+                                    {user?.displayName}
                                 </MenuItem>
                                 <MenuItem onClick={handleCloseUserMenu}>
                                     <Avatar /> Dashboard
                                 </MenuItem>
                                 <Divider />
-                                <MenuItem onClick={handleCloseUserMenu}>
+                                <MenuItem
+                                    onClick={() => {
+                                        handleCloseUserMenu();
+                                        logOut();
+                                        toast.success('Logout Successful')
+                                    }}
+                                >
                                     <ListItemIcon>
                                         <Logout fontSize="small" />
                                     </ListItemIcon>
