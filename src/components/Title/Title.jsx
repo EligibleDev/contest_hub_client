@@ -10,6 +10,7 @@ const Title = ({ text }) => {
                     fontWeight: "700",
                     fontSize: "2.5rem",
                     textTransform: "capitalize",
+                    textAlign: "center"
                 }}
                 variant="h2"
             >

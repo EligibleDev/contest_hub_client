@@ -19,8 +19,6 @@ import { Logout } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-    const pages = ["Products", "Pricing", "Blog"];
-
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -38,6 +36,17 @@ const Header = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const pages = [
+        {
+            label: "Home",
+            link: "/",
+        },
+        {
+            label: "All Contests",
+            link: "/contests",
+        },
+    ];
 
     return (
         <>
@@ -74,9 +83,19 @@ const Header = () => {
                                 }}
                             >
                                 {pages.map((page) => (
-                                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                        <Typography textAlign="center">{page}</Typography>
-                                    </MenuItem>
+                                    <Link
+                                        style={{
+                                            color: "#e74c3c",
+                                        }}
+                                        key={page?.link}
+                                        to={page?.link}
+                                    >
+                                        <MenuItem onClick={handleCloseNavMenu}>
+                                            <Typography textAlign="center">
+                                                {page?.label}
+                                            </Typography>
+                                        </MenuItem>
+                                    </Link>
                                 ))}
                             </Menu>
                         </Box>
@@ -85,18 +104,19 @@ const Header = () => {
 
                         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                             {pages.map((page) => (
-                                <Button
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{
-                                        my: 2,
-                                        color: "white",
-                                        display: "block",
-                                        fontFamily: "poppins",
-                                    }}
-                                >
-                                    {page}
-                                </Button>
+                                <Link key={page?.link} to={page?.link}>
+                                    <Button
+                                        onClick={handleCloseNavMenu}
+                                        sx={{
+                                            my: 2,
+                                            color: "white",
+                                            display: "block",
+                                            fontFamily: "poppins",
+                                        }}
+                                    >
+                                        {page?.label}
+                                    </Button>
+                                </Link>
                             ))}
                         </Box>
 

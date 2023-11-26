@@ -2,12 +2,14 @@ import { Button, Container, Grid, Typography } from "@mui/material";
 import Title from "../../../../components/Title/Title";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useMain from "../../../../hooks/useMain/useMain";
 
 const TopContests = () => {
     const [topContests, setTopContests] = useState([]);
+    const { server } = useMain();
 
     useEffect(() => {
-        fetch("/contests.json")
+        fetch(`${server}/contests`)
             .then((res) => res.json())
             .then((data) => setTopContests(data));
     }, []);
@@ -49,12 +51,15 @@ const TopContests = () => {
                                 justifyContent: "center",
                                 alignItems: "start",
                                 flexDirection: "column",
-                                gap: "10px"
+                                gap: "10px",
                             }}
                             xs={12}
                             lg={4}
                         >
-                            <Typography sx={{ fontSize: "1.5rem", fontWeight: "600" }} variant="h3">
+                            <Typography
+                                sx={{ fontSize: "1.5rem", fontWeight: "600" }}
+                                variant="h3"
+                            >
                                 {contest?.name}
                             </Typography>
 
@@ -64,8 +69,15 @@ const TopContests = () => {
                                     : contest.description}
                                 ...
                             </Typography>
-                            <Typography variant="p" sx={{fontSize: "18px", fontWeight: "500"}}>
-                                Already <b style={{color: "#e74c3c"}}>{contest?.attemptedCount}</b> people joined
+                            <Typography
+                                variant="p"
+                                sx={{ fontSize: "18px", fontWeight: "500" }}
+                            >
+                                Already{" "}
+                                <b style={{ color: "#e74c3c" }}>
+                                    {contest?.attemptedCount}
+                                </b>{" "}
+                                people joined
                             </Typography>
                         </Grid>
 
