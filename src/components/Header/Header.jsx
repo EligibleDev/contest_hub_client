@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Logout } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain/useMain";
 import toast from "react-hot-toast";
 
@@ -24,6 +24,7 @@ const Header = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const { user, logOut } = useMain();
+    const navigate = useNavigate()
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -196,7 +197,10 @@ const Header = () => {
                                     />
                                     {user?.displayName}
                                 </MenuItem>
-                                <MenuItem onClick={handleCloseUserMenu}>
+                                <MenuItem onClick={()=> {
+                                    handleCloseUserMenu()
+                                    navigate("/dashboard")
+                                }}>
                                     <Avatar /> Dashboard
                                 </MenuItem>
                                 <Divider />

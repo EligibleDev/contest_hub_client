@@ -1,0 +1,182 @@
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import ListIcon from "@mui/icons-material/List";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import { useState } from "react";
+import { Hidden } from "@mui/material";
+import { Link } from "react-router-dom";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+
+const Sidebar = () => {
+    const [state, setState] = useState({
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+    });
+
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+            return;
+        }
+
+        setState({ ...state, [anchor]: open });
+    };
+
+    const list = (anchor) => (
+        <Box
+            sx={{ width: 250 }}
+            role="presentation"
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+        >
+            <List>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={["dashboard"]} />
+                    </ListItemButton>
+                </ListItem>
+            </List>
+            <Divider />
+            <List>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <MailIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={"inbox"} />
+                    </ListItemButton>
+                </ListItem>
+            </List>
+        </Box>
+    );
+
+    return (
+        <>
+            <Hidden mdUp>
+                <Box
+                    sx={{
+                        position: "sticky",
+                        top: "0px",
+                        right: "0px",
+                        left: "0px",
+                        width: "100%",
+                        py: "1rem",
+                        background: "#e3e6e8",
+                    }}
+                >
+                    <Button color="primary">
+                        <ListIcon onClick={toggleDrawer("left", true)} />
+                    </Button>
+                </Box>
+                <Drawer
+                    anchor={"left"}
+                    open={state["left"]}
+                    onClose={toggleDrawer("left", false)}
+                >
+                    {list("left")}
+                </Drawer>
+            </Hidden>
+            <Hidden mdDown>
+                <Box
+                    sx={{ width: '100%', borderRight: "1px solid grey", minHeight: "100vh" }}
+                    role="presentation"
+                >
+                    <List>
+                        <Link to="/dashboard">
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <DashboardIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Dashboard"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
+                        <Link to="/dashboard/my_participated_contests">
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <ReceiptLongIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"My Participated Contests"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
+                        <Link to="/dashboard/my_winning_contests">
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <ReceiptLongIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"My Winning Contests"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
+                    </List>
+                    <Divider />
+                    <List>
+                        <Link to="/dashboard/add_contest">
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <DashboardIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Add a Contest"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
+                        <Link to="/dashboard/my_added_contests">
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <ReceiptLongIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"My Added Contests"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
+                    </List>
+                    <Divider/>
+                    <List>
+                        <Link to="/dashboard/manage_contests">
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <DashboardIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Manage Contests"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
+                        <Link to="/dashboard/manage_users">
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <ReceiptLongIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Manage Users"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
+                      
+                    </List>
+                </Box>
+            </Hidden>
+        </>
+    );
+};
+
+export default Sidebar;
