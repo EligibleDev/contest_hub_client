@@ -1,27 +1,25 @@
 import PropTypes from "prop-types";
 import { Navigate, useLocation } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
-import useMain from "../../hooks/useMain/useMain";
-
-const PrivateRoute = ({ children }) => {
+import useRole from "../../hooks/useRole/useRole";
+const AdminRoute = ({ children }) => {
     const location = useLocation();
-
-    const { user, loading } = useMain();
+    const [role, loading] = useRole();
+    console.log(role);
 
     if (loading) {
         return (
             <div className="h-screen flex justify-center items-center">
-                 <CircularProgress />
+                <CircularProgress />
             </div>
         );
-    } else if (!user?.email) {
-        return <Navigate state={location.pathname} to="/login"/>
+    } else if (role !== "admin") {
+        return <Navigate state={location.pathname} to="/dashboard" />;
     }
-
     return children;
 };
 
-PrivateRoute.propTypes = {
+AdminRoute.propTypes = {
     children: PropTypes.node,
 };
-export default PrivateRoute;
+export default AdminRoute;

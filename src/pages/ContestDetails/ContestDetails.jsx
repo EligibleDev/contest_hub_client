@@ -82,7 +82,7 @@ const ContestDetails = () => {
 
                         <Typography
                             gutterBottom
-                            sx={{ fontWeight: "600", fontSize: "22px", pt: "20px" }}
+                            sx={{ fontWeight: "600", fontSize: "22px", pt: "20px", width: '100%' }}
                         >
                             Task Description:
                         </Typography>
@@ -92,7 +92,7 @@ const ContestDetails = () => {
 
                         <Typography
                             gutterBottom
-                            sx={{ fontWeight: "600", fontSize: "22px" }}
+                            sx={{ fontWeight: "600", fontSize: "22px", width: "100%" }}
                         >
                             Description:
                         </Typography>
@@ -118,7 +118,6 @@ const ContestDetails = () => {
                                     // Render something when the countdown is completed
                                     return <span>Contest has ended!</span>;
                                 } else {
-                                    // Render the countdown values
                                     return (
                                         <Typography
                                             gutterBottom

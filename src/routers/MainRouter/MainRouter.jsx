@@ -13,6 +13,9 @@ import AddContest from "../../pages/Creator/AddContest/AddContest";
 import MyAddedContests from "../../pages/Creator/MyAddedContests/MyAddedContests";
 import ManageUsers from "../../pages/Admin/ManageUsers/ManageUsers";
 import ManageContests from "../../pages/Admin/ManageContests/ManageContests";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
+import CreatorRoute from "../../components/CreatorRoute/CreatorRoute";
+import AdminRoute from "../../components/AdminRoute/AdminRoute";
 
 const MainRouter = createBrowserRouter([
     {
@@ -43,35 +46,75 @@ const MainRouter = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <DashboardLayout />,
+        element: (
+            <PrivateRoute>
+                <DashboardLayout />
+            </PrivateRoute>
+        ),
         children: [
             {
                 index: true,
-                element: <MyProfile />,
+                element: (
+                    <PrivateRoute>
+                        <MyProfile />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "my_participated_contests",
-                element: <MyParticipatedContests />,
+                element: (
+                    <PrivateRoute>
+                        <MyParticipatedContests />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "my_winning_contests",
-                element: <MyWinningContests />,
+                element: (
+                    <PrivateRoute>
+                        <MyWinningContests />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "add_contest",
-                element: <AddContest />,
+                element: (
+                    <PrivateRoute>
+                        <CreatorRoute>
+                            <AddContest />
+                        </CreatorRoute>
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "my_added_contests",
-                element: <MyAddedContests />,
+                element: (
+                    <PrivateRoute>
+                        <CreatorRoute>
+                            <MyAddedContests />
+                        </CreatorRoute>
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "manage_users",
-                element: <ManageUsers />,
+                element: (
+                    <PrivateRoute>
+                        <AdminRoute>
+                            <ManageUsers />
+                        </AdminRoute>
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "manage_contests",
-                element: <ManageContests />,
+                element: (
+                    <PrivateRoute>
+                        <AdminRoute>
+                            <ManageContests />
+                        </AdminRoute>
+                    </PrivateRoute>
+                ),
             },
         ],
     },

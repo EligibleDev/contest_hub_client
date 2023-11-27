@@ -10,13 +10,18 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import ListIcon from "@mui/icons-material/List";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useState } from "react";
 import { Hidden } from "@mui/material";
 import { Link } from "react-router-dom";
-import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import useRole from "../../hooks/useRole/useRole";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import AdminMenu from "../AdminMenu/AdminMenu";
+import CreatorMenu from "../CreatorMenu/CreatorMenu";
+import ParticipantMenu from "../ParticipantMenu/ParticipantMenu";
 
 const Sidebar = () => {
+    const [role] = useRole();
+    console.log(role);
     const [state, setState] = useState({
         top: false,
         left: false,
@@ -91,7 +96,11 @@ const Sidebar = () => {
             </Hidden>
             <Hidden mdDown>
                 <Box
-                    sx={{ width: '100%', borderRight: "1px solid grey", minHeight: "100vh" }}
+                    sx={{
+                        width: "100%",
+                        borderRight: "1px solid grey",
+                        minHeight: "100vh",
+                    }}
                     role="presentation"
                 >
                     <List>
@@ -105,74 +114,11 @@ const Sidebar = () => {
                                 </ListItemButton>
                             </ListItem>
                         </Link>
-                        <Link to="/dashboard/my_participated_contests">
-                            <ListItem disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <ReceiptLongIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"My Participated Contests"} />
-                                </ListItemButton>
-                            </ListItem>
-                        </Link>
-                        <Link to="/dashboard/my_winning_contests">
-                            <ListItem disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <ReceiptLongIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"My Winning Contests"} />
-                                </ListItemButton>
-                            </ListItem>
-                        </Link>
                     </List>
                     <Divider />
-                    <List>
-                        <Link to="/dashboard/add_contest">
-                            <ListItem disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <DashboardIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"Add a Contest"} />
-                                </ListItemButton>
-                            </ListItem>
-                        </Link>
-                        <Link to="/dashboard/my_added_contests">
-                            <ListItem disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <ReceiptLongIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"My Added Contests"} />
-                                </ListItemButton>
-                            </ListItem>
-                        </Link>
-                    </List>
-                    <Divider/>
-                    <List>
-                        <Link to="/dashboard/manage_contests">
-                            <ListItem disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <DashboardIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"Manage Contests"} />
-                                </ListItemButton>
-                            </ListItem>
-                        </Link>
-                        <Link to="/dashboard/manage_users">
-                            <ListItem disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <ReceiptLongIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"Manage Users"} />
-                                </ListItemButton>
-                            </ListItem>
-                        </Link>
-                      
-                    </List>
+                    {role === "participant" && <ParticipantMenu />}
+                    {role === "creator" && <CreatorMenu />}
+                    {role === "admin" && <AdminMenu />}
                 </Box>
             </Hidden>
         </>
