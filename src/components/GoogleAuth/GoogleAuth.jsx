@@ -3,9 +3,11 @@ import { Button } from "@mui/material";
 import useMain from "../../hooks/useMain/useMain";
 import { getToken, saveUser } from "../../api/auth";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const GoogleAuth = () => {
     const { signInWithGoogle } = useMain();
+    const navigate = useNavigate();
 
     const handleGoogleAuth = async () => {
         const toastId = toast.loading("Logging in...");
@@ -15,8 +17,9 @@ const GoogleAuth = () => {
             const dbResponse = await saveUser(result?.user);
             await getToken(result?.user?.email);
             toast.success("Google Login Successful", { id: toastId });
+            navigate('/dashboard')
         } catch (error) {
-            console.log(error);
+            console.error(error);
             toast.error(error?.message, { id: toastId });
         }
     };

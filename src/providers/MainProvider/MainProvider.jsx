@@ -18,7 +18,8 @@ export const MainContext = createContext();
 const MainProvider = ({ children }) => {
     const googleProvider = new GoogleAuthProvider();
 
-    const server = "http://localhost:5000";
+    const server = "https://contest-hub-server-rho.vercel.app";
+    // const server = "http://localhost:5000";
 
     const categories = [
         { label: "All", value: "" },
@@ -68,7 +69,6 @@ const MainProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            console.log("CurrentUser-->", currentUser);
             setLoading(false);
         });
         return () => {

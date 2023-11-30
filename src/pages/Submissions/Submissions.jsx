@@ -1,50 +1,55 @@
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import { useState } from "react";
-import {
-    deleteContest,
-    getAllContests,
-    updateContestStatus,
-} from "../../../api/contests";
 import { useQuery } from "@tanstack/react-query";
-import { Button, CircularProgress } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { declareWinner, getSingleContest } from "../../api/contests";
+import { useEffect, useState } from "react";
+import {
+    Button,
+    CircularProgress,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
+} from "@mui/material";
 import toast from "react-hot-toast";
 
-const ManageContests = () => {
-    const {
-        data: contests,
-        isLoading,
-        refetch,
-    } = useQuery({
-        queryFn: async () => await getAllContests(),
-        queryKey: ["contests"],
+const Submissions = () => {
+    const { id } = useParams();
+    const [participants, setParticipants] = useState([]);
+
+    const { data: contest, isLoading, refetch } = useQuery({
+        queryFn: async () => getSingleContest(id),
+        queryKey: ["contest"],
     });
+
+    useEffect(() => {
+        if (contest && contest.participants) {
+            setParticipants(contest.participants);
+        }
+    }, [contest]);
+
+    console.log(contest);
 
     const columns = [
         { id: "name", label: "Name", minWidth: 200 },
-        { id: "attemptedCount", label: "Attempted Count", minWidth: 150 },
-        { id: "deadline", label: "Deadline", minWidth: 100 },
-        { id: "status", label: "Status", minWidth: "75" },
+        { id: "email", label: "Email", minWidth: 150 },
+        { id: "submission", label: "Submission", minWidth: 100 },
         { id: "actions", label: "Actions", minWidth: "100" },
     ];
 
-    const createData = (contest) => {
+    const createData = (participant) => {
         return {
-            id: contest._id,
-            name: contest.name,
-            attemptedCount: contest.attemptedCount,
-            status: contest.status,
-            deadline: contest.deadline,
+            name: participant?.name,
+            email: participant?.email,
+            image: participant?.image,
+            submission: participant?.submission,
         };
     };
 
-    const rows = contests?.map(createData);
+    const rows = participants?.map(createData);
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -58,29 +63,16 @@ const ManageContests = () => {
         setPage(0);
     };
 
-    const updateStatus = async (contestId) => {
-        const toastId = toast.loading("Updating...");
-        const updatingStatus = "approved";
-        try {
-            await updateContestStatus(contestId, updatingStatus);
-            toast.success("Approved", { id: toastId });
-        } catch (error) {
-            console.error(error);
-            toast.error(error.message, { id: toastId });
-        }
-        await refetch();
-    };
+    const handleDeclareWinner = async (participant) => {
+        const toastId = toast.loading("loading...");
 
-    const handleDelete = async (contestId) => {
-        const toastId = toast.loading("Deleting...");
         try {
-            await deleteContest(contestId);
-            toast.success("Deleted", { id: toastId });
+            await declareWinner(id, participant);
+            toast.success("Winner Declared", { id: toastId });
+            refetch()
         } catch (error) {
             console.error(error);
             toast.error(error.message, { id: toastId });
-        } finally {
-            refetch();
         }
     };
 
@@ -112,36 +104,28 @@ const ManageContests = () => {
                                         hover
                                         role="checkbox"
                                         tabIndex={-1}
-                                        key={row.id} // Use row.id as the key
+                                        key={row.id}
                                     >
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
-                                                <TableCell
-                                                    key={column.id}
-                                                    align={column.align}
-                                                >
+                                                <TableCell key={column.id}>
                                                     {column.id === "actions" ? (
-                                                        <>
+                                                        contest?.winnerInfo?.email ? (
+                                                            <Button disabled>
+                                                                Winner Has Been Decided
+                                                            </Button>
+                                                        ) : (
                                                             <Button
                                                                 onClick={() =>
-                                                                    handleDelete(row.id)
+                                                                    handleDeclareWinner(
+                                                                        row
+                                                                    )
                                                                 }
                                                             >
-                                                                Delete
+                                                                declare winner
                                                             </Button>
-                                                            {row.status === "pending" && (
-                                                                <Button
-                                                                    onClick={() =>
-                                                                        updateStatus(
-                                                                            row.id
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    Approve
-                                                                </Button>
-                                                            )}
-                                                        </>
+                                                        )
                                                     ) : column.format &&
                                                       typeof value === "number" ? (
                                                         column.format(value)
@@ -170,4 +154,4 @@ const ManageContests = () => {
     );
 };
 
-export default ManageContests;
+export default Submissions;

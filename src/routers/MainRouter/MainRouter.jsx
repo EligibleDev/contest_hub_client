@@ -16,6 +16,11 @@ import ManageContests from "../../pages/Admin/ManageContests/ManageContests";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import CreatorRoute from "../../components/CreatorRoute/CreatorRoute";
 import AdminRoute from "../../components/AdminRoute/AdminRoute";
+import RegisterContest from "../../pages/RegisterContest/RegisterContest";
+import UpdateContest from "../../pages/UpdateContest/UpdateContest";
+import Submissions from "../../pages/Submissions/Submissions";
+import UpdateProfile from "../../pages/UpdateProfile/UpdateProfile";
+import Statistics from "../../pages/Statistics/Statistics";
 
 const MainRouter = createBrowserRouter([
     {
@@ -32,7 +37,15 @@ const MainRouter = createBrowserRouter([
             },
             {
                 path: "/contest/:id",
-                element: <ContestDetails />,
+                element: (
+                    <PrivateRoute>
+                        <ContestDetails />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "/register_contest/:id",
+                element: <RegisterContest />,
             },
         ],
     },
@@ -61,6 +74,14 @@ const MainRouter = createBrowserRouter([
                 ),
             },
             {
+                path: "update_profile",
+                element: (
+                    <PrivateRoute>
+                        <UpdateProfile />
+                    </PrivateRoute>
+                ),
+            },
+            {
                 path: "my_participated_contests",
                 element: (
                     <PrivateRoute>
@@ -73,6 +94,14 @@ const MainRouter = createBrowserRouter([
                 element: (
                     <PrivateRoute>
                         <MyWinningContests />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "statistics",
+                element: (
+                    <PrivateRoute>
+                        <Statistics />
                     </PrivateRoute>
                 ),
             },
@@ -92,6 +121,24 @@ const MainRouter = createBrowserRouter([
                     <PrivateRoute>
                         <CreatorRoute>
                             <MyAddedContests />
+                        </CreatorRoute>
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "update_contest/:id",
+                element: (
+                    <PrivateRoute>
+                        <UpdateContest />
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "submissions/:id",
+                element: (
+                    <PrivateRoute>
+                        <CreatorRoute>
+                            <Submissions />
                         </CreatorRoute>
                     </PrivateRoute>
                 ),

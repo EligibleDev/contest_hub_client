@@ -4,10 +4,9 @@ import { CircularProgress } from "@mui/material";
 import useRole from "../../hooks/useRole/useRole";
 const AdminRoute = ({ children }) => {
     const location = useLocation();
-    const [role, loading] = useRole();
-    console.log(role);
+    const [role, isLoading] = useRole();
 
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="h-screen flex justify-center items-center">
                 <CircularProgress />

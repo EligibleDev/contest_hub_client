@@ -1,5 +1,5 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GoogleAuth from "../../components/GoogleAuth/GoogleAuth";
 import useMain from "../../hooks/useMain/useMain";
 import toast from "react-hot-toast";
@@ -7,6 +7,7 @@ import { getToken } from "../../api/auth";
 
 const Login = () => {
     const { signIn } = useMain();
+    const navigate = useNavigate()
 
     const handleLogin = async (event) => {
         const toastId = toast.loading("Logging in...");
@@ -20,9 +21,10 @@ const Login = () => {
             const result = await signIn(email, password);
             await getToken(result?.user?.email);
             toast.success("Login successful", { id: toastId });
+            navigate('/dashboard')
         } catch (error) {
-            console.log(error);
-            toast.error(error?.message);
+            console.error(error);
+            toast.error(error?.message, {id: toastId});
         }
     };
 

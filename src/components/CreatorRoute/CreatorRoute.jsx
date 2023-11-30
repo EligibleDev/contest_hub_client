@@ -5,9 +5,9 @@ import useRole from "../../hooks/useRole/useRole";
 
 const CreatorRoute = ({ children }) => {
     const location = useLocation();
-    const [role, loading] = useRole();
+    const [role, isLoading] = useRole();
 
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="h-screen flex justify-center items-center">
                 <CircularProgress />

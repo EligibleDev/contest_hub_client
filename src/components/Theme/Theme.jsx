@@ -1,4 +1,5 @@
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material";
 import PropTypes from "prop-types";
 
 const Theme = ({ children }) => {

@@ -1,5 +1,5 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain/useMain";
 import { getToken, saveUser } from "../../api/auth";
 import toast from "react-hot-toast";
@@ -7,6 +7,7 @@ import GoogleAuth from "../../components/GoogleAuth/GoogleAuth";
 
 const Register = () => {
     const { imageUpload, updateUserProfile, createUser } = useMain();
+    const navigate = useNavigate();
 
     const handleRegister = async (event) => {
         event.preventDefault();
@@ -25,8 +26,9 @@ const Register = () => {
             await getToken(result?.user?.email);
 
             toast.success("Successfully Registered", { id: toastId });
+            navigate("/dashboard");
         } catch (error) {
-            console.log(error);
+            console.error(error);
             toast.error(error?.message, { id: toastId });
         }
     };
@@ -102,7 +104,7 @@ const Register = () => {
                     </Link>
                 </Typography>
             </form>
-            <GoogleAuth/>
+            <GoogleAuth />
         </div>
     );
 };

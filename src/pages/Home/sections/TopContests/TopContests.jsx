@@ -2,12 +2,10 @@ import { Button, Container, Grid, Typography } from "@mui/material";
 import Title from "../../../../components/Title/Title";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useMain from "../../../../hooks/useMain/useMain";
 import { getTopContests } from "../../../../api/contests";
 
 const TopContests = () => {
     const [topContests, setTopContests] = useState([]);
-    const { server } = useMain();
 
     useEffect(() => {
         const fetchTopContests = async () => {
@@ -90,8 +88,7 @@ const TopContests = () => {
                         </Grid>
 
                         <Grid sx={{ textAlign: "left" }} item xs={12} lg={2}>
-                            {/* todo: set the link properly */}
-                            <Link>
+                            <Link to={`/contest/${contest?._id}`}>
                                 <Button size="large" variant="contained">
                                     Details
                                 </Button>

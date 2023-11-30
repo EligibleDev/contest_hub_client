@@ -18,8 +18,6 @@ const Contests = () => {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        console.log(newValue);
-        console.log(categories[newValue]);
         setCurrentCategory(categories[newValue].value);
     };
 
@@ -28,7 +26,6 @@ const Contests = () => {
             .then((res) => res.json())
             .then((data) => setContests(data));
     }, [currentCategory, server]);
-    console.log(currentCategory);
 
     return (
         <>

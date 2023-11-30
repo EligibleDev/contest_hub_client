@@ -1,8 +1,8 @@
 
 const Footer = () => {
       return (
-            <div>
-                  this is footer
+            <div style={{borderTop: "1px solid grey", width: "100%", padding: "1.5rem 0px", textAlign: "center"}}>
+                  © Contest Hub | 2023
             </div>
       );
 };

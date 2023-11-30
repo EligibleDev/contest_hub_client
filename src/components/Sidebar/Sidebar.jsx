@@ -18,10 +18,12 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AdminMenu from "../AdminMenu/AdminMenu";
 import CreatorMenu from "../CreatorMenu/CreatorMenu";
 import ParticipantMenu from "../ParticipantMenu/ParticipantMenu";
+import { Home, Logout } from "@mui/icons-material";
+import useMain from "../../hooks/useMain/useMain";
 
 const Sidebar = () => {
     const [role] = useRole();
-    console.log(role);
+    const {logOut} = useMain()
     const [state, setState] = useState({
         top: false,
         left: false,
@@ -114,6 +116,24 @@ const Sidebar = () => {
                                 </ListItemButton>
                             </ListItem>
                         </Link>
+                        <Link to="/">
+                            <ListItem disablePadding>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <Home />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Go to Home"} />
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
+                            <ListItem disablePadding>
+                                <ListItemButton onClick={logOut}>
+                                    <ListItemIcon>
+                                        <Logout />
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Logout"} />
+                                </ListItemButton>
+                            </ListItem>
                     </List>
                     <Divider />
                     {role === "participant" && <ParticipantMenu />}

@@ -1,6 +1,7 @@
 import {
     Box,
     Button,
+    CircularProgress,
     FormControl,
     Grid,
     InputLabel,
@@ -8,61 +9,60 @@ import {
     Select,
     TextField,
 } from "@mui/material";
-import { useState } from "react";
 import toast from "react-hot-toast";
-import useMain from "../../../hooks/useMain/useMain";
-import { publishContest } from "../../../api/contests";
+import useMain from "../../hooks/useMain/useMain";
+import { useQuery } from "@tanstack/react-query";
+import { getSingleContest, updateContest } from "../../api/contests";
+import { useParams } from "react-router-dom";
 
-const AddContest = () => {
-    const [category, setCategory] = useState("");
-    const [deadline, setDeadline] = useState("");
-    const { imageUpload, user, categories } = useMain();
+const UpdateContest = () => {
+    const { categories } = useMain();
+    const { id } = useParams();
 
-    const handlePublish = async (event) => {
-        const toastId = toast.loading("Publishing...");
+    const { data: oldContest, isLoading } = useQuery({
+        queryFn: async () => await getSingleContest(id),
+        queryKey: ["oldContest"],
+    });
+
+    const handleUpdate = async (event) => {
+        const toastId = toast.loading("Updating...");
         event.preventDefault();
 
         const name = event.target.name.value;
         const price = event.target.price.value;
-        const image = event.target.image.files[0];
+        const image = event.target.image.value;
         const prize = event.target.prize.value;
         const task = event.target.task.value;
         const description = event.target.description.value;
+        const category = event.target.category.value;
+        const deadline = event.target.deadline.value;
 
         try {
-            const imageData = await imageUpload(image);
-            toast.success("Published", { id: toastId });
             const newContest = {
                 name,
-                image: imageData?.data?.display_url,
-                attemptedCount: 0,
+                image,
                 description,
                 price,
                 prizeMoney: prize,
                 taskSubmissionText: task,
                 category,
-                creatorInfo: {
-                    name: user.displayName,
-                    email: user.email,
-                    photoURL: user.photoURL,
-                },
                 deadline,
-                status: "pending",
-                participants: [],
             };
-
-            await publishContest(newContest);
-            event.target.reset();
+            const result = await updateContest(id, newContest);
+            console.log(result);
+            toast.success("Updated", { id: toastId });
         } catch (error) {
             console.error(error);
             toast.error(error.message, { id: toastId });
         }
     };
 
+    if (isLoading) return <CircularProgress />;
+
     return (
         <Box sx={{ width: "100%" }}>
             <form
-                onSubmit={handlePublish}
+                onSubmit={handleUpdate}
                 style={{
                     width: "100%",
                     display: "flex",
@@ -73,6 +73,7 @@ const AddContest = () => {
                 <Grid container spacing={1}>
                     <Grid xs={11} sm={6} item>
                         <TextField
+                            defaultValue={oldContest?.name}
                             required
                             sx={{ width: "100%" }}
                             label="Name of the Contest"
@@ -82,6 +83,7 @@ const AddContest = () => {
 
                     <Grid xs={11} sm={6} item>
                         <TextField
+                            defaultValue={oldContest?.price}
                             required
                             sx={{ width: "100%" }}
                             label="Price"
@@ -94,16 +96,18 @@ const AddContest = () => {
                 <Grid container spacing={1}>
                     <Grid xs={11} sm={6} item>
                         <TextField
+                            defaultValue={oldContest?.image}
                             required
                             sx={{ width: "100%" }}
-                            type="file"
+                            type="url"
                             name="image"
-                            accept="image/*"
+                            label="Image URL"
                         />
                     </Grid>
 
                     <Grid xs={11} sm={6} item>
                         <TextField
+                            defaultValue={oldContest?.prizeMoney}
                             required
                             sx={{ width: "100%" }}
                             label="Prize Money"
@@ -118,10 +122,12 @@ const AddContest = () => {
                         <FormControl sx={{ width: "100%" }}>
                             <InputLabel id="demo-simple-select-label">Type</InputLabel>
                             <Select
+                                // val={oldContest?.category}
+                                value={oldContest?.category}
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 label="Type"
-                                onChange={(e) => setCategory(e.target.value)}
+                                name="category"
                             >
                                 {categories.map((item) => (
                                     <MenuItem key={item?.label} value={item?.value}>
@@ -134,10 +140,10 @@ const AddContest = () => {
 
                     <Grid xs={11} sm={6} item>
                         <TextField
+                            defaultValue={oldContest?.deadline}
                             required
                             sx={{ width: "100%" }}
                             name="deadline"
-                            onChange={(e) => setDeadline(e.target.value)}
                             type="date"
                         />
                     </Grid>
@@ -146,6 +152,7 @@ const AddContest = () => {
                 <Grid container spacing={1}>
                     <Grid xs={11} sm={6} item>
                         <textarea
+                            defaultValue={oldContest?.taskSubmissionText}
                             required
                             style={{
                                 width: "100%",
@@ -161,6 +168,7 @@ const AddContest = () => {
 
                     <Grid xs={11} sm={6} item>
                         <textarea
+                            defaultValue={oldContest?.description}
                             required
                             style={{
                                 width: "100%",
@@ -175,11 +183,11 @@ const AddContest = () => {
                     </Grid>
                 </Grid>
                 <Button type="submit" size="large" variant="contained">
-                    Publish
+                    Update
                 </Button>
             </form>
         </Box>
     );
 };
 
-export default AddContest;
+export default UpdateContest;
